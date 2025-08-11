@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="", tags=["health"])
+router = APIRouter()
 
-@router.get("/healthz")
-def healthz():
-    return {"ok": True}
+
+@router.get("/")
+def health_check():
+    return {"status": "healthy", "message": "Personalized Learning API is running"}

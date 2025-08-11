@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Arrays",
+    "description": "Understanding array data structure and basic operations",
+    "category": "dsa",
+    "difficulty": 1
+  },
+  {
+    "name": "Linked Lists",
+    "description": "Single and double linked lists implementation and operations",
+    "category": "dsa",
+    "difficulty": 2
+  },
+  {
+    "name": "Stacks",
+    "description": "Stack data structure and its applications",
+    "category": "dsa",
+    "difficulty": 2
+  },
+  {
+    "name": "Queues",
+    "description": "Queue data structure and variations",
+    "category": "dsa",
+    "difficulty": 2
+  },
+  {
+    "name": "Hash Tables",
+    "description": "Hash table implementation and collision handling",
+    "category": "dsa",
+    "difficulty": 3
+  },
+  {
+    "name": "Binary Trees",
+    "description": "Binary tree structure and traversal algorithms",
+    "category": "dsa",
+    "difficulty": 3
+  },
+  {
+    "name": "Binary Search Trees",
+    "description": "BST operations and balancing concepts",
+    "category": "dsa",
+    "difficulty": 3
+  },
+  {
+    "name": "Heaps",
+    "description": "Min/max heaps and priority queue implementation",
+    "category": "dsa",
+    "difficulty": 3
+  },
+  {
+    "name": "Graphs",
+    "description": "Graph representation and basic algorithms",
+    "category": "dsa",
+    "difficulty": 4
+  },
+  {
+    "name": "Sorting Algorithms",
+    "description": "Various sorting techniques and their complexities",
+    "category": "dsa",
+    "difficulty": 2
+  },
+  {
+    "name": "Searching Algorithms",
+    "description": "Linear and binary search techniques",
+    "category": "dsa",
+    "difficulty": 2
+  },
+  {
+    "name": "Dynamic Programming",
+    "description": "DP concepts and problem-solving techniques",
+    "category": "dsa",
+    "difficulty": 4
+  },
+  {
+    "name": "Greedy Algorithms",
+    "description": "Greedy approach and optimization problems",
+    "category": "dsa",
+    "difficulty": 4
+  },
+  {
+    "name": "Recursion",
+    "description": "Recursive thinking and implementation",
+    "category": "dsa",
+    "difficulty": 2
+  },
+  {
+    "name": "Backtracking",
+    "description": "Backtracking algorithms and constraint satisfaction",
+    "category": "dsa",
+    "difficulty": 4
+  },
+  {
+    "name": "Divide and Conquer",
+    "description": "Divide and conquer strategy and applications",
+    "category": "dsa",
+    "difficulty": 3
+  }
+]

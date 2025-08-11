@@ -1,9 +1,32 @@
 FROM python:3.11-slim
 
 WORKDIR /app
-COPY pyproject.toml /app/
-RUN pip install --upgrade pip && pip install -e .
 
-COPY alembic.ini /app/
-COPY alembic /app/alembic
-COPY app /app/app
+# Copy requirements first for better caching
+COPY pyproject.toml .
+
+# Install Python dependencies directly without system packages
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+    fastapi \
+    uvicorn[standard] \
+    sqlalchemy \
+    alembic \
+    psycopg[binary] \
+    pydantic[email] \
+    pydantic-settings \
+    passlib[bcrypt] \
+    pyjwt \
+    python-multipart
+
+# Copy the rest of the application
+COPY . .
+
+# Install the application in development mode
+RUN pip install -e .
+
+# Expose port
+EXPOSE 8000
+
+# Command will be overridden by docker-compose
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

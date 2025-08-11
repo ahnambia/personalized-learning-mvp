@@ -1,13 +1,19 @@
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import String, ForeignKey
-import uuid
-from app.db.base import Base
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from ..db.base import Base
+
 
 class Profile(Base):
     __tablename__ = "profiles"
-    user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
-    display_name: Mapped[str | None] = mapped_column(String(120))
-    avatar_url: Mapped[str | None] = mapped_column(String(512))
-    timezone: Mapped[str | None] = mapped_column(String(64))
-    user: Mapped["app.models.user.User"] = relationship(back_populates="profile")
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, unique=True, index=True)
+    display_name = Column(String, nullable=True)
+    learning_goals = Column(Text, nullable=True)
+    preferences = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    # Relationships
+    user = relationship("User", back_populates="profile")

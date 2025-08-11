@@ -1,0 +1,104 @@
+[
+  {
+    "title": "Arrays Basics",
+    "description": "Test your understanding of array fundamentals",
+    "skill": "Arrays",
+    "questions": [
+      {
+        "type": "mcq",
+        "prompt": "What is the time complexity of accessing an element in an array by index?",
+        "options": [
+          {"text": "O(1)", "is_correct": true},
+          {"text": "O(n)", "is_correct": false},
+          {"text": "O(log n)", "is_correct": false},
+          {"text": "O(n²)", "is_correct": false}
+        ]
+      },
+      {
+        "type": "mcq",
+        "prompt": "Which of the following is true about arrays?",
+        "options": [
+          {"text": "Elements are stored in contiguous memory locations", "is_correct": true},
+          {"text": "Size can be changed dynamically", "is_correct": false},
+          {"text": "Elements can be of different data types", "is_correct": false},
+          {"text": "Insertion at beginning is O(1)", "is_correct": false}
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Linked Lists Fundamentals",
+    "description": "Basic concepts of linked lists",
+    "skill": "Linked Lists",
+    "questions": [
+      {
+        "type": "mcq",
+        "prompt": "What is the main advantage of linked lists over arrays?",
+        "options": [
+          {"text": "Dynamic size", "is_correct": true},
+          {"text": "Random access", "is_correct": false},
+          {"text": "Cache locality", "is_correct": false},
+          {"text": "Less memory usage", "is_correct": false}
+        ]
+      },
+      {
+        "type": "mcq",
+        "prompt": "What is the time complexity of inserting at the beginning of a singly linked list?",
+        "options": [
+          {"text": "O(1)", "is_correct": true},
+          {"text": "O(n)", "is_correct": false},
+          {"text": "O(log n)", "is_correct": false},
+          {"text": "O(n²)", "is_correct": false}
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Stack Operations",
+    "description": "Understanding stack data structure",
+    "skill": "Stacks",
+    "questions": [
+      {
+        "type": "mcq",
+        "prompt": "Which principle does a stack follow?",
+        "options": [
+          {"text": "LIFO (Last In First Out)", "is_correct": true},
+          {"text": "FIFO (First In First Out)", "is_correct": false},
+          {"text": "Random access", "is_correct": false},
+          {"text": "Priority based", "is_correct": false}
+        ]
+      },
+      {
+        "type": "mcq",
+        "prompt": "What happens when you try to pop from an empty stack?",
+        "options": [
+          {"text": "Stack underflow", "is_correct": true},
+          {"text": "Stack overflow", "is_correct": false},
+          {"text": "Returns null", "is_correct": false},
+          {"text": "Nothing happens", "is_correct": false}
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Recursion Basics",
+    "description": "Fundamental concepts of recursion",
+    "skill": "Recursion",
+    "questions": [
+      {
+        "type": "mcq",
+        "prompt": "What is essential for a recursive function to work correctly?",
+        "options": [
+          {"text": "Base case", "is_correct": true},
+          {"text": "Loop", "is_correct": false},
+          {"text": "Global variables", "is_correct": false},
+          {"text": "Multiple parameters", "is_correct": false}
+        ]
+      },
+      {
+        "type": "short_answer",
+        "prompt": "What is the factorial of 5?"
+      }
+    ]
+  }
+]

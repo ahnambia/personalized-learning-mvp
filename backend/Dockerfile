@@ -1,14 +1,15 @@
 FROM python:3.11-slim
 
-WORKDIR /app
-
-# Faster, quieter pip installs
+# Faster, quieter pip
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/app
 
-# Install Python deps directly (no system packages needed)
+WORKDIR /app
+
+# Install Python dependencies (no system compilers needed)
 RUN pip install --upgrade pip && \
     pip install \
       "fastapi==0.111.0" \
@@ -22,9 +23,10 @@ RUN pip install --upgrade pip && \
       "pyjwt==2.8.0" \
       "python-multipart==0.0.9"
 
-# Copy app after deps for better caching
+# Copy backend source after deps for better caching
 COPY alembic.ini /app/
 COPY alembic /app/alembic
 COPY app /app/app
 
+# Run migrations then start API
 CMD ["sh","-c","alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]

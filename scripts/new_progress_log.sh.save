@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Get today's date
+TODAY=$(date +%F) # YYYY-MM-DD format
+PROGRESS_DIR="progress"
+LOG_FILE="$PROGRESS_DIR/$TODAY.md"
+PROGRESS_LOG="PROGRESS_LOG.md"
+
+# Make sure the progress directory exists
+mkdir -p "$PROGRESS_DIR"
+
+# Create the daily log file with template
+cat <<EOL > "$LOG_FILE"
+# 🗓 Progress — $TODAY
+
+**Status:** 🟢 On Track
+
+---
+
+## ✅ Focus Areas
+- 
+
+---
+
+## 📈 Progress Summary
+- 
+
+---
+
+## 📌 Key Decisions
+- 
+
+---
+
+## ⚠️ Challenges / Blockers
+- 
+
+---
+
+## 🎯 Next Steps
+- [ ] 
+
+---
+
+## 📝 Notes / Learnings
+- 
+EOL
+
+# Update PROGRESS_LOG.md with new entry if not already present
+if ! grep -q "$TODAY" "$PROGRESS_LOG"; then
+    sed -i '' "7i\\
+| [$TODAY]($PROGRESS_DIR/$TODAY.md) | ⏳ Planned | TBD |" "$PROGRESS_LOG"
+fi
+
+echo "✅ Created progress log for $TODAY: $LOG_FILE"
+

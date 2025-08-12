@@ -15,7 +15,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
     psycopg[binary] \
     pydantic[email] \
     pydantic-settings \
-    passlib[bcrypt] \
+    "passlib[bcrypt]>=1.7.4" \
+    "bcrypt>=4.0.0" \
     pyjwt \
     python-multipart
 

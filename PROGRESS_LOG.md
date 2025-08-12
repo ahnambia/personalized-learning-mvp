@@ -28,3 +28,12 @@
 | 2025-08-12 | 🟢 On Track | Backend env ready, `/healthz` working        | Alembic revision missing, DB readiness lag | Create migrations, user table, auth endpoints |
 
 ---
+
+<!-- WEEK: 2025-08-11 to 2025-08-17 START -->
+
+### Week: 2025-08-11 to 2025-08-17
+| Date | Status | Main Achievements |
+|------|--------|--------------------|
+| [2025-08-12](progress/2025-08-12.md) | 🟢 On Track | Created backend FastAPI project structure in `app/` with `models`, `schemas`, and `routers`. |
+
+<!-- WEEK: 2025-08-11 to 2025-08-17 END -->

@@ -1,37 +1,14 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime
-from sqlalchemy.orm import relationship
-from datetime import datetime
-from ..db.base import Base
-
+from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String, Text, DateTime, func
+import uuid
+from app.db.base import Base
 
 class Skill(Base):
     __tablename__ = "skills"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True, nullable=False)
-    description = Column(Text, nullable=True)
-    category = Column(String, nullable=True)
-    difficulty = Column(Integer, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-
-    # Relationships
-    content_items = relationship("ContentItem", back_populates="skill")
-    quizzes = relationship("Quiz", back_populates="skill")
-    mastery = relationship("Mastery", back_populates="skill")
-    
-    # Prerequisites relationships
-    prerequisites = relationship(
-        "Skill",
-        secondary="skill_prerequisites",
-        primaryjoin="Skill.id == SkillPrerequisite.skill_id",
-        secondaryjoin="Skill.id == SkillPrerequisite.prerequisite_id",
-        back_populates="dependent_skills"
-    )
-    dependent_skills = relationship(
-        "Skill",
-        secondary="skill_prerequisites", 
-        primaryjoin="Skill.id == SkillPrerequisite.prerequisite_id",
-        secondaryjoin="Skill.id == SkillPrerequisite.skill_id",
-        back_populates="prerequisites"
-    )
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid())
+    slug: Mapped[str] = mapped_column(String(128), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(128))
+    domain: Mapped[str] = mapped_column(String(64), default="dsa")
+    description: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped = mapped_column(DateTime(timezone=True), server_default=func.now())

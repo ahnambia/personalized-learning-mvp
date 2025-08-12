@@ -1,24 +1,20 @@
 from pydantic_settings import BaseSettings
+from pydantic import AnyUrl
 from typing import List
 
-
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgresql+psycopg://postgres:postgres@localhost:5432/plg"
-    
-    JWT_SECRET: str = "change-me-in-prod"
+    DATABASE_URL: AnyUrl
+    JWT_SECRET: str
     JWT_ALGO: str = "HS256"
     ACCESS_TOKEN_MINUTES: int = 15
     REFRESH_TOKEN_DAYS: int = 7
-    
-    CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    CORS_ORIGINS: str = "http://localhost:5175"
     ENV: str = "dev"
-    
-    @property
-    def cors_origins_list(self) -> List[str]:
-        return [origin.strip() for origin in self.CORS_ORIGINS.split(",")]
-    
-    class Config:
-        env_file = ".env"
 
+    @property
+    def cors_list(self) -> List[str]:
+        return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
+
+    model_config = {"env_file": ".env", "extra": "ignore"}
 
 settings = Settings()

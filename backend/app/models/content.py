@@ -1,20 +1,17 @@
-from sqlalchemy import Column, Integer, String, Text, JSON, DateTime, ForeignKey
-from sqlalchemy.orm import relationship
-from datetime import datetime
-from ..db.base import Base
-
+from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String, Integer, Boolean, DateTime, func
+import uuid
+from app.db.base import Base
 
 class ContentItem(Base):
     __tablename__ = "content_items"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True, nullable=False)
-    type = Column(String, nullable=False)  # article, video, exercise, etc.
-    data = Column(JSON, nullable=True)  # Flexible content data
-    skill_id = Column(Integer, ForeignKey("skills.id"), nullable=False, index=True)
-    duration_minutes = Column(Integer, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-
-    # Relationships
-    skill = relationship("Skill", back_populates="content_items")
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid())
+    slug: Mapped[str] = mapped_column(String(128), unique=True, index=True)
+    title: Mapped[str] = mapped_column(String(256))
+    content_type: Mapped[str] = mapped_column(String(32))
+    difficulty: Mapped[int] = mapped_column(Integer, default=3)
+    url: Mapped[str | None] = mapped_column(String(1024))
+    est_minutes: Mapped[int | None] = mapped_column(Integer)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped = mapped_column(DateTime(timezone=True), server_default=func.now())

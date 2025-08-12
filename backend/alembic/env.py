@@ -1,65 +1,41 @@
+from __future__ import annotations
 from logging.config import fileConfig
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
 from alembic import context
-import os
-import sys
+from sqlalchemy import engine_from_config, pool
+import os, sys
 
-# Add the parent directory to the path so we can import our app
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+# Ensure /app/app is importable
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "app"))
 
-from app.models.base import Base
-from app.core.config import settings
+from app.db.base import Base  # noqa
+from app.models import *      # noqa
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
 config = context.config
 
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
+# Use DATABASE_URL from environment (docker-compose provides it via .env)
+if os.getenv("DATABASE_URL"):
+    config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL"))
+
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
 target_metadata = Base.metadata
 
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
-
-def get_url():
-    return settings.DATABASE_URL
-
-def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode."""
-    url = get_url()
-    context.configure(
-        url=url,
-        target_metadata=target_metadata,
-        literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
-    )
-
+def run_migrations_offline():
+    url = config.get_main_option("sqlalchemy.url")
+    context.configure(url=url, target_metadata=target_metadata, literal_binds=True, include_schemas=True)
     with context.begin_transaction():
         context.run_migrations()
 
-def run_migrations_online() -> None:
-    """Run migrations in 'online' mode."""
-    configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = get_url()
+def run_migrations_online():
     connectable = engine_from_config(
-        configuration,
+        config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        future=True,
     )
-
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
-
+        context.configure(connection=connection, target_metadata=target_metadata, include_schemas=True)
         with context.begin_transaction():
             context.run_migrations()
 

@@ -1,21 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
-// Signup page
 export default function Signup() {
-  // Get auth functions and navigate/redirect helpers
   const { signup } = useAuth();
   const nav = useNavigate();
   const [email, setEmail] = useState("newuser@example.com");
-
-  // Form state
   const [password, setPassword] = useState("testpass123");
   const [displayName, setDisplayName] = useState("New User");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  // Handle form submission
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);

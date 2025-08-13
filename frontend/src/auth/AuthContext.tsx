@@ -1,7 +1,6 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "../lib/api";
 
-// User type
 type User = {
   id: string;
   email: string;
@@ -9,7 +8,6 @@ type User = {
   created_at: string;
 };
 
-// Auth context type
 type AuthContextType = {
   user: User | null;
   token: string | null;
@@ -20,10 +18,9 @@ type AuthContextType = {
   refreshMe: () => Promise<void>;
 };
 
-// Auth context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,16 +32,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const refreshMe = useCallback(async () => {
-    if (!token) {
-      setUser(null);
-      return;
-    }
+    if (!token) { setUser(null); return; }
     const { ok, data } = await api<User>("/auth/me", { token });
-    if (ok) setUser(data);
-    else setUser(null);
+    if (ok) setUser(data); else setUser(null);
   }, [token]);
 
-  // bootstrap on load (and when token changes)
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -53,7 +45,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     })();
   }, [refreshMe]);
 
-  // Auth functions
   const signup = useCallback(async (email: string, password: string, displayName?: string | null) => {
     const { ok, data } = await api<{ access_token: string }>("/auth/signup", {
       method: "POST",
@@ -65,7 +56,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return true;
   }, [refreshMe, saveToken]);
 
-  // Auth functions
   const login = useCallback(async (email: string, password: string) => {
     const { ok, data } = await api<{ access_token: string }>("/auth/login", {
       method: "POST",
@@ -77,13 +67,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return true;
   }, [refreshMe, saveToken]);
 
-  // Auth functions
   const logout = useCallback(() => {
     saveToken(null);
     setUser(null);
   }, [saveToken]);
 
-  // Auth context value
   const value = useMemo<AuthContextType>(() => ({
     user, token, loading, signup, login, logout, refreshMe
   }), [user, token, loading, signup, login, logout, refreshMe]);

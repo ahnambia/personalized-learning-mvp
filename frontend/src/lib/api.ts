@@ -1,4 +1,4 @@
-// Base URL points to backend
+// Base URL points to backend API (CORS already allows 5176)
 const API_BASE = "http://localhost:8000";
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -22,11 +22,9 @@ export async function api<T = unknown>(
     method,
     headers: h,
     body: body ? JSON.stringify(body) : undefined,
-    // CORS: backend already allows 5176
     credentials: "include",
   });
 
-  // If unauthorized, clear token so the app can react
   if (res.status === 401) {
     localStorage.removeItem("token");
   }

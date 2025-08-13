@@ -1,21 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
-// Login page
 export default function Login() {
-  // Get auth functions and navigate/redirect helpers
   const { login } = useAuth();
   const nav = useNavigate();
   const loc = useLocation() as any;
-
-  // Form state
   const [email, setEmail] = useState("alice@example.com");
   const [password, setPassword] = useState("testpass123");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  // Handle form submission
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
@@ -27,7 +22,6 @@ export default function Login() {
     nav(dest, { replace: true });
   };
 
-  // Render
   return (
     <div style={{ maxWidth: 420, margin: "40px auto", padding: 16 }}>
       <h2>Log in</h2>

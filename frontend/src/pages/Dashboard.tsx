@@ -1,7 +1,13 @@
 import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
+  const nav = useNavigate();
+  <button style={{ marginTop: 12 }} onClick={() => { logout(); nav("/login", { replace: true }); }}>
+    Log out
+  </button>
+  
   return (
     <div style={{ maxWidth: 720, margin: "40px auto", padding: 16 }}>
       <h2>Dashboard (protected)</h2>

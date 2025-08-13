@@ -1,5 +1,5 @@
 // Base URL points to backend API (CORS already allows 5176)
-const API_BASE = "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
